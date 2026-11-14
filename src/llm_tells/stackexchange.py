@@ -202,13 +202,15 @@ def sample_site(
                 n_words := eligible(answer, reasons)
             ):
                 pool[answer["answer_id"]] = (answer, n_words)
-        n_long = sum(n >= LONG_MIN_WORDS for _, n in pool.values())
+        n_long = sum(LONG_MIN_WORDS <= n <= MAX_WORDS for _, n in pool.values())
         n_main = sum(n <= MAX_WORDS for _, n in pool.values())
         if n_long >= 2 * long_quota and n_main >= 2 * (main_quota + long_quota):
             break
     ids = sorted(pool)
     rng.shuffle(ids)
-    long_ids = [i for i in ids if pool[i][1] >= LONG_MIN_WORDS][:long_quota]
+    long_ids = [i for i in ids if LONG_MIN_WORDS <= pool[i][1] <= MAX_WORDS][
+        :long_quota
+    ]
     main_ids = [i for i in ids if i not in set(long_ids) and pool[i][1] <= MAX_WORDS][
         :main_quota
     ]
@@ -243,7 +245,7 @@ def attach_questions(
     records: list[Answer] = []
     for answer in answers:
         question = questions.get(answer["question_id"])
-        if question is None:
+        if question is None or not question.get("body_markdown", "").strip():
             continue
         clean = clean_markdown(answer["body_markdown"], unescape=True)
         question_clean = clean_markdown(
