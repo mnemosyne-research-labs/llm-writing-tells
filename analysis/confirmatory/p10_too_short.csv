@@ -1,0 +1,11 @@
+register,source,n,share_too_short
+hn,claude,50,0.3600
+hn,gemma,400,0.4775
+hn,human,400,0.3225
+hn,muse,400,0.1075
+hn,qwen,400,0.1650
+se,claude,47,0.1064
+se,gemma,400,0.1950
+se,human,400,0.2000
+se,muse,400,0.0375
+se,qwen,400,0.0825
