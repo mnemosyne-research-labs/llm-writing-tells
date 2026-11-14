@@ -9,7 +9,7 @@ import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from functools import cache
+from functools import cache, partial
 from pathlib import Path
 from typing import Any
 
@@ -177,7 +177,7 @@ def api_headers(key_file: Path | None) -> dict[str, str]:
 
 
 def post(
-    client: httpx.Client, spec: ModelSpec, path: str, body: dict
+    client: httpx.Client, spec: ModelSpec, path: str, body: dict[str, Any]
 ) -> httpx.Response:
     """POST to the model's server, retrying rate-limit and server errors with backoff.
 
@@ -409,7 +409,7 @@ def run(spec: ModelSpec, prompts: pl.DataFrame, out_path: Path) -> int:
     if out_path.exists():
         with out_path.open() as lines:
             done = {json.loads(line)["text_id"] for line in lines}
-    todo = [
+    todo: list[dict[str, Any]] = [
         row
         for row in prompts.iter_rows(named=True)
         if f"{row['prompt_id']}|{spec.name}" not in done
@@ -423,7 +423,7 @@ def run(spec: ModelSpec, prompts: pl.DataFrame, out_path: Path) -> int:
         ThreadPoolExecutor(spec.parallel) as pool,
         out_path.open("a") as out,
     ):
-        for record in pool.map(lambda row: generate_one(client, spec, row), todo):
+        for record in pool.map(partial(generate_one, client, spec), todo):
             out.write(json.dumps(record) + "\n")
             out.flush()
     return len(todo)

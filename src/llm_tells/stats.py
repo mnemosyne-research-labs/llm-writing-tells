@@ -52,6 +52,18 @@ class Cells:
     exposure: NDArray[np.float64]
 
 
+def identity(x: float) -> float:
+    """Return the value unchanged (the scale for a standardized difference).
+
+    Args:
+        x: Value
+
+    Returns:
+        The same value
+    """
+    return x
+
+
 def cells(
     frame: pl.DataFrame, column: str, measure: Measure, sources: list[str]
 ) -> dict[str, Cells]:
@@ -159,7 +171,7 @@ def permute_within_rows(cell: Cells, rng: np.random.Generator) -> Cells:
     keys = np.where(missing, np.inf, rng.random(cell.counts.shape))
     source_order = np.argsort(keys, axis=1, kind="stable")
     target_order = np.argsort(missing, axis=1, kind="stable")
-    rows = np.arange(cell.counts.shape[0])[:, None]
+    rows = np.arange(int(cell.counts.shape[0])).reshape(-1, 1)
     counts = np.empty_like(cell.counts)
     exposure = np.empty_like(cell.exposure)
     counts[rows, target_order] = cell.counts[rows, source_order]
@@ -326,10 +338,9 @@ def fit_gee(
         )
         if (cell_totals == 0).any():
             return None
-        use_nb = nb_alpha is not None and measure == "rate"
         family = (
             sm.families.NegativeBinomial(alpha=nb_alpha)
-            if use_nb
+            if nb_alpha is not None and measure == "rate"
             else sm.families.Poisson()
         )
         words = data["words"].to_numpy().astype(float)
@@ -351,7 +362,7 @@ def fit_gee(
         ).fit(maxiter=100)
     except ValueError, np.linalg.LinAlgError:
         return None
-    if fit is None or not getattr(fit, "converged", True):
+    if not getattr(fit, "converged", True):
         return None
     return GeeFit(
         np.asarray(fit.params),
@@ -644,12 +655,12 @@ def holm(p_values: list[float]) -> list[float]:
     Returns:
         Adjusted p-values in the input order
     """
-    order = np.argsort(p_values)
+    order: NDArray[np.intp] = np.argsort(p_values)
     m = len(p_values)
     adjusted = np.empty(m)
     running = 0.0
     for rank, index in enumerate(order):
-        running = max(running, min(1.0, (m - rank) * p_values[index]))
+        running = max(running, min(1.0, (m - rank) * p_values[int(index)]))
         adjusted[index] = running
     return adjusted.tolist()
 
@@ -664,12 +675,12 @@ def bh(p_values: list[float]) -> list[float]:
         q-values in the input order
     """
     m = len(p_values)
-    order = np.argsort(p_values)[::-1]
+    order: NDArray[np.intp] = np.argsort(p_values)[::-1]
     q = np.empty(m)
     running = 1.0
     for position, index in enumerate(order):
         rank = m - position
-        running = min(running, p_values[index] * m / rank)
+        running = min(running, p_values[int(index)] * m / rank)
         q[index] = running
     return q.tolist()
 

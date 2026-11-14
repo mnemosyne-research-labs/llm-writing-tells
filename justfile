@@ -13,6 +13,6 @@ lint:
     uv run ruff format --check .
     uv run basedpyright
 
-# Run tests
+# Run tests with coverage
 test:
-    uv run pytest
+    uv run pytest -n auto --cov --cov-report=term-missing

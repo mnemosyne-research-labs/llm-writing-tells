@@ -53,7 +53,10 @@ def texts_table(prompts: pl.DataFrame, generated: list[Path]) -> pl.DataFrame:
         pl.lit(False).alias("failed"),
     )
     records = [
-        json.loads(line) for path in generated if path.exists() for line in path.open()
+        json.loads(line)
+        for path in generated
+        if path.exists()
+        for line in path.read_text().splitlines()
     ]
     if not records:
         return human

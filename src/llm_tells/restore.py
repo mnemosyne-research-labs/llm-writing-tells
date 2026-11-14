@@ -85,7 +85,7 @@ def fetch_se(pairs: list[list[str | int]]) -> tuple[list[dict[str, Any]], list[i
     by_site: defaultdict[str, list[int]] = defaultdict(list)
     for site, answer_id in pairs:
         by_site[str(site)].append(int(answer_id))
-    found: dict[int, dict[str, Any]] = {}
+    found: dict[tuple[str, int], dict[str, Any]] = {}
     with httpx.Client(timeout=60) as client:
         api = StackExchangeClient(client)
         filter_id = api.get(
@@ -107,11 +107,14 @@ def fetch_se(pairs: list[list[str | int]]) -> tuple[list[dict[str, Any]], list[i
                 )["items"]
             ]
             found |= {
-                record.answer_id: asdict(record)
+                (site, record.answer_id): asdict(record)
                 for record in attach_questions(api, site, answers, filter_id)
             }
-    order = [int(answer_id) for _, answer_id in pairs]
-    return [found[i] for i in order if i in found], [i for i in order if i not in found]
+    order = [(str(site), int(answer_id)) for site, answer_id in pairs]
+    return (
+        [found[key] for key in order if key in found],
+        [key[1] for key in order if key not in found],
+    )
 
 
 def restore(raw_dir: Path) -> dict[str, list[int]]:

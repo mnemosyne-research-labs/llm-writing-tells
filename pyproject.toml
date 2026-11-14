@@ -17,7 +17,14 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=9.2,<9.3", "ruff", "basedpyright"]
+dev = [
+    "pytest>=9.2,<9.3",
+    "ruff",
+    "basedpyright",
+    "pytest-xdist>=3.8.0",
+    "pytest-cov>=7.1.0",
+    "scipy-stubs>=1.18.1.1",
+]
 
 [tool.ruff]
 line-length = 88
@@ -41,8 +48,18 @@ addopts = ["-ra", "--import-mode=importlib"]
 strict = true
 filterwarnings = ["error"]
 
+[tool.coverage.run]
+source = ["llm_tells"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "@overload", "if __name__ == .__main__.:"]
+
 [tool.basedpyright]
-typeCheckingMode = "standard"
+typeCheckingMode = "strict"
 
 [tool.uv.sources]
 en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
