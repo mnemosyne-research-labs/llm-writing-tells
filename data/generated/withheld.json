@@ -32,18 +32,6 @@
     "cont:english:572107|llama_instruct",
     "cont:workplace:178118|llama_instruct"
   ],
-  "openai.jsonl": [
-    "se:english:486848|gpt_sol",
-    "se:english:543660|gpt_sol",
-    "se:english:584527|gpt_sol",
-    "se:travel:151243|gpt_sol",
-    "se:english:584527|gpt_luna"
-  ],
-  "claude_api.jsonl": [
-    "se:english:584527|claude_sonnet",
-    "se:english:552012|claude_opus",
-    "se:english:584527|claude_opus",
-    "se:money:117225|claude_opus",
-    "se:travel:151243|claude_opus"
-  ]
+  "openai.jsonl": [],
+  "claude_api.jsonl": []
 }
