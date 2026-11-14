@@ -1,0 +1,55 @@
+[project]
+name = "llm-tells"
+version = "0.1.0"
+description = "Production study: which claimed tells of LLM-written text hold up"
+requires-python = ">=3.14"
+dependencies = [
+    "polars",
+    "numpy",
+    "scipy",
+    "statsmodels",
+    "scikit-learn",
+    "spacy",
+    "httpx",
+    "markdown-it-py",
+    "en-core-web-sm",
+    "anthropic>=2.8.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=9.2,<9.3", "ruff", "basedpyright"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "C4", "PIE", "PT", "PTH", "RUF", "TID", "D", "PERF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.pytest]
+testpaths = ["tests"]
+addopts = ["-ra", "--import-mode=importlib"]
+strict = true
+filterwarnings = ["error"]
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_tells"]

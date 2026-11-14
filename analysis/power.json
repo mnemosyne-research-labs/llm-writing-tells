@@ -1,0 +1,119 @@
+{
+  "p1_contrast": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.05,
+      "se": 0.04
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.0
+    },
+    "power_ratio_2": 0.795,
+    "estimate_only": true
+  },
+  "p2_rather_than": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.01,
+      "se": 0.04
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 6.343055987245592
+    },
+    "power_ratio_2": 0.039,
+    "estimate_only": true
+  },
+  "p3_tricolon": {
+    "measure": "rate",
+    "base": {
+      "hn": 0.8969503687462628,
+      "se": 1.0637543436635701
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.0
+    },
+    "power_ratio_2": 0.996,
+    "estimate_only": false
+  },
+  "p4_staccato": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.01,
+      "se": 0.03
+    },
+    "inverse_k": {
+      "hn": 0.08729992135393745,
+      "se": 13.529886890514032
+    },
+    "power_ratio_2": 0.038,
+    "estimate_only": true
+  },
+  "p5_signpost": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.02,
+      "se": 0.005
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.0
+    },
+    "power_ratio_2": 0.001,
+    "estimate_only": true
+  },
+  "p6_closer": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.02,
+      "se": 0.01
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.0
+    },
+    "power_ratio_2": 0.031,
+    "estimate_only": true
+  },
+  "p7_worth_noting": {
+    "measure": "presence",
+    "base": {
+      "hn": 0.005,
+      "se": 0.02
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.0
+    },
+    "power_ratio_2": 0.001,
+    "estimate_only": true
+  },
+  "p8_participial": {
+    "measure": "rate",
+    "base": {
+      "hn": 0.7972892166633447,
+      "se": 0.70916956244238
+    },
+    "inverse_k": {
+      "hn": 0.0,
+      "se": 0.3377860930105652
+    },
+    "power_ratio_2": 0.988,
+    "estimate_only": false
+  },
+  "p9_nominal": {
+    "measure": "rate",
+    "base": {
+      "hn": 20.131552720749454,
+      "se": 17.020069498617122
+    },
+    "inverse_k": {
+      "hn": 0.07205533240564277,
+      "se": 0.2749955642834047
+    },
+    "power_ratio_2": 1.0,
+    "estimate_only": false
+  }
+}

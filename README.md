@@ -1,2 +1,72 @@
-# llm-writing-tells
-Data and code behind the MRL proof sketch on which claimed signs of AI writing hold up
+# What gives away AI writing: data and code
+
+The data and code behind the Mnemosyne Research Labs proof sketch [We checked 23 things people say give away AI writing. Five held up.](https://mnemosyneresearch.com/findings/what-gives-away-ai-writing) (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022, and 23 claimed signs of AI writing ("tells") were counted in both. The plan was written and dated before any text was collected: [PREREGISTRATION.md](PREREGISTRATION.md), with eighteen dated deviations.
+
+Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not here; see [Not included](#not-included).
+
+## What's here
+
+| Path | What |
+| --- | --- |
+| `src/llm_tells/` | All code: sampling, cleaning, generation, the tell counters, coding, analysis, the release build and the restore step |
+| `data/corpus/` | The prompt tables: one row per prompt with its IDs, register, site, date, target length and split (exploratory or confirmatory); no text |
+| `data/raw/*/*.ids.json` | Hacker News item IDs and Stack Exchange answer IDs, in sample order, and the exclusion counts from sampling |
+| `data/generated/*.jsonl` | Every model reply with its settings, stop reason, attempt and token usage: Qwen 3.8 27B, Gemma 4 E4B and Muse Glimmer 30B (`main.jsonl`, with first-attempt restorations in `d6_patch.jsonl`), gpt-6.1-sol and gpt-6-luna (`openai.jsonl`), Claude Sonnet 5.5 and Opus 5.5 (`claude_api.jsonl`), and Llama 3.1 8B base and Instruct continuations (`continuation.jsonl`) |
+| `data/counts/*.parquet` | One row per text, human and model, with every tell count; no text |
+| `coding/` | The codebook, the coders' codes (Claude Haiku, GLM-4.7-Flash, Claude Fable and the human check) by opaque ID, and the agreement tables |
+| `analysis/` | The switch rule, the power simulation, the registered three-model run (`confirmatory/`), and the five- and seven-model runs (`frontier/`, `frontier_7/`) |
+| `tests/` | Tests for the release and restore steps |
+
+## Not included
+
+- **Human texts.** Hacker News comments belong to their authors and Stack Exchange posts are CC BY-SA 4.0 by theirs, so only IDs and our labels are released. `llm_tells.restore` downloads them again by ID.
+- **38 model replies** that repeat 12 or more consecutive words of the human text they answer (mostly Llama 3.1 8B base copying the answer it was asked to continue). Their counts are in `data/counts/`; their text is withheld, listed in `data/generated/withheld.json`.
+- **The exploratory Claude Code arm** (97 texts written with the lab's style instructions in context, replaced by the API arm) and the 11 pilot texts of the withdrawn Gemini arm. The Claude Code arm's counts are in `data/counts/main.parquet` (source `claude`).
+
+## Reproduce
+
+Python 3.14 and [uv](https://docs.astral.sh/uv/). `just sync` installs the locked environment.
+
+**The analysis, from the released counts** (about 2 minutes):
+
+```sh
+uv run python -I -m llm_tells.report data/counts/main.parquet analysis/switch_rule.json out/confirmatory \
+  --continuation data/counts/continuation.parquet --recent data/counts/recent_hn.parquet --coding coding
+uv run python -I -m llm_tells.frontier data/counts/frontier.parquet analysis/switch_rule.json out/frontier_7 \
+  --models gpt_sol gpt_luna claude_sonnet claude_opus --main data/counts/main.parquet
+```
+
+Every table in `out/` matches `analysis/` byte for byte, except one row: the character n-gram ceiling in `discrimination.csv` needs the texts, so it is left out when they are absent.
+
+**From the texts.** Restore the human texts (about a minute; uses about 30 of the Stack Exchange API's 300 keyless daily requests), rebuild the prompt tables keeping the released splits, and count again:
+
+```sh
+uv run python -I -m llm_tells.restore data/raw
+uv run python -I -m llm_tells.corpus data/raw out/corpus --previous data/corpus/prompts.parquet
+uv run python -I -m llm_tells.measure out/corpus/prompts.parquet out/main.parquet \
+  --generated data/generated/main.jsonl data/generated/d6_patch.jsonl
+uv run python -I -m llm_tells.measure out/corpus/prompts.parquet out/frontier.parquet \
+  --generated data/generated/openai.jsonl data/generated/claude_api.jsonl
+```
+
+Checked on November 14, 2026: all 1,209 human texts restored, and every tell count in the main, frontier and recent Hacker News tables matches the released counts, except the withheld replies (skipped). The download kept a cleaned copy of each text made with the cleaning rules as they were before deviation D4; the restore cleans with the current rules. That changes the target length (`target_words`) of two prompts, and the human half of two continuation items (`cont:english:509249` and `cont:english:572253`: word, sentence and sentence-length counts). Some question titles were also edited after the download, which changes the prompt text but no count.
+
+**Generating the replies again** needs the models: the local ones through LM Studio (`llm_tells.generate`, settings in the code), the hosted ones through their APIs with key files in a folder named by `LLM_TELLS_CREDS` (`llm_tells.generate` for OpenAI, `llm_tells.claude_batch` for Anthropic). The hosted arms cost US$1.84 (OpenAI) and US$4.44 (Anthropic). Sampling was seeded where the API allowed it; Anthropic's API takes no seed, so its replies will not repeat exactly.
+
+## Terms for the model replies
+
+The replies are model-generated and labelled with the model that wrote each one. Qwen, Gemma and Muse Glimmer are Apache 2.0. Built with Llama: the Llama 3.1 replies are subject to the Llama 3.1 Community License and Acceptable Use Policy. The OpenAI and Anthropic replies are released for research and are not offered for training AI models; their providers' terms bar using them that way.
+
+## Cite
+
+```bibtex
+@techreport{ouyang2026tells,
+  author      = {Ouyang, Flavia},
+  title       = {We checked 23 things people say give away {AI} writing. Five held up.},
+  institution = {Mnemosyne Research Labs},
+  number      = {MRL:2611.0002v1},
+  year        = {2026},
+  month       = nov,
+  url         = {https://mnemosyneresearch.com/findings/what-gives-away-ai-writing}
+}
+```

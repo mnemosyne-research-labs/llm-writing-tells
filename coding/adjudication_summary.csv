@@ -1,0 +1,5 @@
+code,stratum,n_items,n_changed,n_final_is_counter,n_final_is_fable,n_final_is_neither
+participial,agree,5,0,5,5,0
+participial,disagree,29,18,17,19,3
+tricolon,agree,5,0,5,5,0
+tricolon,disagree,23,14,12,10,4

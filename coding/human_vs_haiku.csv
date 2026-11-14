@@ -1,0 +1,7 @@
+code,group,n,kappa,precision,recall,n_counter_pos,n_coder_pos
+tricolon,all,65,0.804,0.778,1.000,27,21
+tricolon,human,29,0.754,0.700,1.000,10,7
+tricolon,model,36,0.831,0.824,1.000,17,14
+participial,all,65,0.696,0.667,0.933,21,15
+participial,human,29,0.583,0.571,0.800,7,5
+participial,model,36,0.753,0.714,1.000,14,10

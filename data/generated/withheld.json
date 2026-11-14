@@ -1,0 +1,49 @@
+{
+  "main.jsonl": [
+    "se:english:486848|gemma",
+    "se:english:572076|gemma",
+    "se:english:584527|gemma",
+    "se:money:117225|gemma",
+    "se:workplace:168819|gemma",
+    "se:workplace:168819|muse",
+    "se:english:543660|qwen",
+    "se:english:584527|qwen",
+    "se:english:486848|muse",
+    "se:english:543660|muse",
+    "se:english:572168|muse",
+    "se:english:584527|muse",
+    "se:travel:151243|muse"
+  ],
+  "d6_patch.jsonl": [],
+  "continuation.jsonl": [
+    "cont:english:584483|llama_base",
+    "cont:english:572107|llama_base",
+    "cont:english:572253|llama_base",
+    "cont:english:567960|llama_base",
+    "cont:cooking:114466|llama_base",
+    "cont:parenting:42446|llama_base",
+    "cont:parenting:42414|llama_base",
+    "cont:workplace:168845|llama_base",
+    "cont:workplace:178134|llama_base",
+    "cont:workplace:141321|llama_base",
+    "cont:academia:144359|llama_base",
+    "cont:history:68900|llama_base",
+    "cont:diy:247801|llama_base",
+    "cont:english:572107|llama_instruct",
+    "cont:workplace:178118|llama_instruct"
+  ],
+  "openai.jsonl": [
+    "se:english:486848|gpt_sol",
+    "se:english:543660|gpt_sol",
+    "se:english:584527|gpt_sol",
+    "se:travel:151243|gpt_sol",
+    "se:english:584527|gpt_luna"
+  ],
+  "claude_api.jsonl": [
+    "se:english:584527|claude_sonnet",
+    "se:english:552012|claude_opus",
+    "se:english:584527|claude_opus",
+    "se:money:117225|claude_opus",
+    "se:travel:151243|claude_opus"
+  ]
+}

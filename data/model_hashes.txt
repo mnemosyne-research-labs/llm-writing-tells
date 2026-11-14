@@ -1,0 +1,16 @@
+471a9a81b54dddbfef43e8a71960ca24ad3c727891c6b0750a9db9a214aab504  lmstudio-community/Qwen3.8-27B-MLX-4bit/model-00001-of-00003.safetensors
+e7474b8f968f4078dfd4889925961c5b0da9939219b614dba08eb63c46590de7  lmstudio-community/Qwen3.8-27B-MLX-4bit/model-00002-of-00003.safetensors
+1038989bed1346ecdb541a45c078df2aae99a9509f35bfd51e7a04802a5d8402  lmstudio-community/Qwen3.8-27B-MLX-4bit/model-00003-of-00003.safetensors
+e58e5ed66324cdc0ce22f51d4d71a9b2db8c24f666278d1b71c3440a18c0f163  lmstudio-community/gemma-4-E4B-it-MLX-4bit/model-00001-of-00002.safetensors
+5ae9ab6d6e86dd4d8f7eb6957eb7ad151121431df3855516e89c185824d640cf  lmstudio-community/gemma-4-E4B-it-MLX-4bit/model-00002-of-00002.safetensors
+f48b452316f9b213758e8659444029b961a24a07f99a1abb2a9f88b06f7c00c6  lmstudio-community/Muse-Glimmer-30B-GGUF/mmproj-Muse-Glimmer-30B-Q4_K_M.gguf
+4cc57c0f51040a226e5a72cc47b7613f7772950e460a665f7083de89f183f60e  lmstudio-community/Muse-Glimmer-30B-GGUF/Muse-Glimmer-30B-KQuant-17GB-Q4_K_M.gguf
+6e0c585d37afa10ec93040fd12084475f8cb01a91cc218f4ebabbd4fc3df2390  lmstudio-community/GLM-4.7-Flash-MLX-6bit/model-00001-of-00005.safetensors
+4d946dbd519f285ce7306ce496fa41d4cdfe95970d7200521ab131296613abbf  lmstudio-community/GLM-4.7-Flash-MLX-6bit/model-00002-of-00005.safetensors
+f43ee77317244ce9be5fecce69f9233a09f2ac2e6f379cfaf23d91d1918bd24c  lmstudio-community/GLM-4.7-Flash-MLX-6bit/model-00003-of-00005.safetensors
+60ff3f20dfe1715a72cb065a0832bfc61509181833047c92298966b9725e21b3  lmstudio-community/GLM-4.7-Flash-MLX-6bit/model-00004-of-00005.safetensors
+e6d708fd3826107c8dddacf31792fd40f210ae2981dbb9fc3995eabc126ba4e9  lmstudio-community/GLM-4.7-Flash-MLX-6bit/model-00005-of-00005.safetensors
+7b851f8765c4315c657e1c0e1286a9599671b6bd28aecdb2c660866da99cf916  mlx-community/Meta-Llama-3.1-8B-8bit/model-00001-of-00002.safetensors
+8a7b2e7a3ea580c93df36f85e46a521f302d0dab969ea3289cc015f335377109  mlx-community/Meta-Llama-3.1-8B-8bit/model-00002-of-00002.safetensors
+7a95efa49076982b420abfa2ba83fc3e1fce4d59cbc56ecfb4cf1993539eacaf  mlx-community/Meta-Llama-3.1-8B-Instruct-8bit/model-00001-of-00002.safetensors
+cb95c51af9aacf0f82d7a9131082166ea63e4b9ab9e7ab116c829097d4393ab9  mlx-community/Meta-Llama-3.1-8B-Instruct-8bit/model-00002-of-00002.safetensors

@@ -1,0 +1,12 @@
+{
+  "length": 356,
+  "eligible": 208,
+  "dead_or_deleted": 45,
+  "not_comment": 79,
+  "parent_not_comment": 61,
+  "code": 4,
+  "mostly_quoted": 3,
+  "parent_short": 8,
+  "not_english": 2,
+  "parent_dead": 2
+}
