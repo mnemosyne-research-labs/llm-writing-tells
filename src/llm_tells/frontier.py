@@ -15,6 +15,7 @@ from llm_tells.analysis import (
     test_family,
     write,
 )
+from llm_tells.stats import Measure
 
 REPLICATION_TELLS = ("P2", "S1", "S3", "P3")
 REPLICATION_RATIO = 2.0
@@ -22,7 +23,7 @@ REPLICATION_Q = 0.05
 
 
 def model_table(
-    data: pl.DataFrame, model: str, measures: dict, seed: int
+    data: pl.DataFrame, model: str, measures: dict[str, Measure], seed: int
 ) -> pl.DataFrame:
     """Score one model's 21 counted tells against the human texts (D15).
 
@@ -51,7 +52,7 @@ def model_table(
 
 
 def pooled(
-    data: pl.DataFrame, models: list[str], measures: dict, seed: int
+    data: pl.DataFrame, models: list[str], measures: dict[str, Measure], seed: int
 ) -> pl.DataFrame:
     """Recalculate the registered pooled test over a longer model list (D18).
 

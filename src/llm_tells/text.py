@@ -13,6 +13,9 @@ BlockKind = Literal["para", "heading", "item"]
 
 URL_RE = re.compile(r"\b(?:https?://|www\.)\S+", re.IGNORECASE)
 WORD_RE = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z]+)*")
+# Kept as run for this study: it also strips prose such as "x < y and y > z" (in
+# this corpus only "<->" in two texts; see results.md, Limitations). A tag-only
+# pattern would change one model text's word count.
 TAG_RE = re.compile(r"<[^>]+>")
 PRE_RE = re.compile(r"<pre>.*?</pre>", re.DOTALL | re.IGNORECASE)
 SPACE_RE = re.compile(r"[ \t\u00a0]+")

@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 import polars as pl
+from numpy.typing import NDArray
 
 from llm_tells.analysis import MAIN_SOURCES, PRIMARY
 from llm_tells.stats import gee_contrast
@@ -37,7 +38,7 @@ class Setting:
     words: dict[str, dict[str, list[int]]]
 
 
-def overdispersion(counts: np.ndarray, exposure: np.ndarray) -> float:
+def overdispersion(counts: NDArray[np.float64], exposure: NDArray[np.float64]) -> float:
     """Method-of-moments 1/k for counts with exposure.
 
     Args:

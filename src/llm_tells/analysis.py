@@ -3,6 +3,7 @@
 import argparse
 import json
 import math
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,7 @@ from llm_tells.stats import (
     estimate_tell,
     holm,
     human_total,
+    identity,
     lr_plus,
     verdict,
 )
@@ -217,7 +219,9 @@ def finish(results: list[dict[str, Any]], adjust: str) -> pl.DataFrame:
     rows: list[dict[str, Any]] = []
     for row, p_adj in zip(results, adjusted, strict=True):
         contrast: Contrast = row.pop("_contrast")
-        scale = (lambda x: x) if row["measure"] == "cv" else math.exp
+        scale: Callable[[float], float] = (
+            identity if row["measure"] == "cv" else math.exp
+        )
         rows.append(
             {
                 **{k: v for k, v in row.items() if not k.startswith("c_ci")},
@@ -268,7 +272,9 @@ def per_cell(
                     )
                 except RuntimeError:
                     continue
-                scale = (lambda x: x) if measures[tell.id] == "cv" else math.exp
+                scale: Callable[[float], float] = (
+                    identity if measures[tell.id] == "cv" else math.exp
+                )
                 rows.append(
                     {
                         "id": tell.id,

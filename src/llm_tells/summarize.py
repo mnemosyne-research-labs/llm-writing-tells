@@ -97,7 +97,7 @@ def per_model_table(frame: pl.DataFrame) -> str:
             (r["register"], r["model"]): r
             for r in frame.filter(pl.col("id") == tell_id).iter_rows(named=True)
         }
-        values = []
+        values: list[str] = []
         for cell in cells:
             row = sub.get(cell)
             values.append(

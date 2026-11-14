@@ -268,12 +268,14 @@ def build(out: Path) -> dict[str, list[str]]:
     Raises:
         RuntimeError: If any released file still contains human text
     """
-    for name in ("src", "tests", "data", "coding", "analysis"):
+    for name in ("src", "tests", "typings", "data", "coding", "analysis"):
         shutil.rmtree(out / name, ignore_errors=True)
     for path in (STUDY / "src/llm_tells").glob("*.py"):
         copy(path, out / "src/llm_tells" / path.name)
     for path in (STUDY / "tests").glob("*.py"):
         copy(path, out / "tests" / path.name)
+    for path in (STUDY / "typings").rglob("*.pyi"):
+        copy(path, out / path.relative_to(STUDY))
     for name in CODE_FILES:
         copy(STUDY / name, out / name)
     for source, target in DOC_FILES.items():

@@ -4,7 +4,9 @@ import argparse
 import json
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
+from functools import partial
 from pathlib import Path
+from typing import Any
 
 import httpx
 import polars as pl
@@ -28,7 +30,8 @@ def main() -> None:
     )
     args = parser.parse_args()
     spec = MODELS[args.model]
-    records = [json.loads(line) for line in args.out_path.open()]
+    with args.out_path.open() as lines:
+        records: list[dict[str, Any]] = [json.loads(line) for line in lines]
     old_rule = [
         r
         for r in records
@@ -61,11 +64,12 @@ def main() -> None:
     with httpx.Client(timeout=900) as client, ThreadPoolExecutor(PARALLEL) as pool:
         first = list(
             pool.map(
-                lambda r: request(client, spec, prompts[r["prompt_id"]], 0), targets
+                partial(request, client, spec, attempt=0),
+                [prompts[r["prompt_id"]] for r in targets],
             )
         )
     subprocess.run([LMS, "unload", spec.name], check=True, capture_output=True)
-    fixed: dict[str, dict] = {}
+    fixed: dict[str, dict[str, Any]] = {}
     for record, retry in zip(targets, first, strict=True):
         if not failed(retry["raw"]):
             fixed[record["text_id"]] = {

@@ -170,7 +170,9 @@ def run_batch(
     Returns:
         One record per row
     """
-    state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    state: dict[str, str] = (
+        json.loads(state_path.read_text()) if state_path.exists() else {}
+    )
     key = f"{spec.name}|{attempt}|{rows[0]['prompt_id']}|{len(rows)}"
     if key not in state:
         batch = client.messages.batches.create(

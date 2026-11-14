@@ -1,10 +1,12 @@
 """Secondary and exploratory analyses: robustness, interaction, discrimination, Claude arm, recent HN."""
 
 import math
+from collections.abc import Callable
 from typing import Any
 
 import numpy as np
 import polars as pl
+from numpy.typing import NDArray
 from scipy import stats as scipy_stats
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.impute import SimpleImputer
@@ -22,6 +24,7 @@ from llm_tells.stats import (
     estimate_tell,
     gee_contrast,
     haldane_contrast,
+    identity,
     interaction_contrast,
     lr_plus,
     presence_at_median,
@@ -78,7 +81,7 @@ def ratio_row(contrast: Any, measure: Measure) -> dict[str, float]:
             "ci95_hi": float("nan"),
             "p": float("nan"),
         }
-    scale = (lambda x: x) if measure == "cv" else math.exp
+    scale: Callable[[float], float] = identity if measure == "cv" else math.exp
     return {
         "effect": scale(contrast.estimate),
         "ci95_lo": scale(contrast.ci95[0]),
@@ -194,8 +197,9 @@ def robustness(
         checks: dict[str, Any] = {}
         if measure == "rate":
             human = frame.filter(pl.col("source") == "human")
-            counts = human[tell.column].to_numpy().astype(float)
-            expected = counts.sum() / human["words"].sum() * human["words"].to_numpy()
+            counts: NDArray[np.float64] = human[tell.column].to_numpy().astype(float)
+            words: NDArray[np.float64] = human["words"].to_numpy().astype(float)
+            expected = counts.sum() / words.sum() * words
             alpha = max(
                 1e-3,
                 float(
@@ -257,7 +261,7 @@ def presence_table(data: pl.DataFrame, measures: dict[str, Measure]) -> pl.DataF
     Returns:
         One row per tell with a column per cell
     """
-    rows = []
+    rows: list[dict[str, Any]] = []
     for tell in PRIMARY + SECONDARY:
         if measures[tell.id] != "presence":
             continue
@@ -339,7 +343,10 @@ def grouped_scores(
 
 
 def group_bootstrap_auc(
-    y: np.ndarray, scores: np.ndarray, groups: np.ndarray, rng: np.random.Generator
+    y: NDArray[np.int_],
+    scores: NDArray[np.float64],
+    groups: NDArray[Any],
+    rng: np.random.Generator,
 ) -> tuple[float, float]:
     """95% group-bootstrap interval for AUC.
 
@@ -353,11 +360,13 @@ def group_bootstrap_auc(
         Lower and upper bounds
     """
     unique, inverse = np.unique(groups, return_inverse=True)
-    members = [np.flatnonzero(inverse == g) for g in range(len(unique))]
-    values = []
+    members: list[NDArray[np.intp]] = [
+        np.flatnonzero(inverse == g) for g in range(len(unique))
+    ]
+    values: list[float] = []
     for _ in range(N_BOOT):
-        picked = np.concatenate(
-            [members[g] for g in rng.integers(0, len(unique), len(unique))]
+        picked: NDArray[np.intp] = np.concatenate(
+            [members[int(g)] for g in rng.integers(0, len(unique), len(unique))]
         )
         if len(set(y[picked])) == 2:
             values.append(roc_auc_score(y[picked], scores[picked]))
@@ -464,7 +473,7 @@ def claude_arm(
         pl.col("prompt_id").is_in(prompts.implode())
         & pl.col("source").is_in(["human", "claude"])
     )
-    rows = []
+    rows: list[dict[str, Any]] = []
     for tell in PRIMARY + SECONDARY:
         measure = measures[tell.id]
         frame = frame_for(sub, tell, ["human", "claude"])
@@ -510,7 +519,7 @@ def recent_hn(recent: pl.DataFrame, baseline: pl.DataFrame) -> pl.DataFrame:
     Returns:
         One row per tell with shares and Wilson intervals
     """
-    rows = []
+    rows: list[dict[str, Any]] = []
     for tell in PRIMARY + SECONDARY:
         if tell.se_only or tell.column == "p10_cv":
             continue
