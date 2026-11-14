@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import math
 import re
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -11,6 +12,7 @@ from typing import Any
 import httpx
 import numpy as np
 import polars as pl
+from numpy.typing import NDArray
 from sklearn.metrics import cohen_kappa_score
 
 from llm_tells.counters import matched_phrases
@@ -125,7 +127,7 @@ def content_sample(counts: pl.DataFrame, seed: int) -> pl.DataFrame:
     Returns:
         The sampled texts with an opaque ID and a flag for the Claude subset
     """
-    parts = []
+    parts: list[pl.DataFrame] = []
     for (source, register), cell in counts.sort("text_id").group_by(
         ["source", "register"], maintain_order=True
     ):
@@ -258,8 +260,13 @@ def human_check(
     )
 
 
+# Per side: positives and negatives in the pool, then the coder's codes on counter-positive
+# and counter-negative texts.
+type Cell = tuple[int, int, NDArray[np.bool_], NDArray[np.bool_]]
+
+
 def correction_factor(
-    cells: dict[bool, tuple[int, int, np.ndarray, np.ndarray]],
+    cells: dict[bool, Cell],
     precision: dict[bool, float],
     miss: dict[bool, float],
 ) -> float:
@@ -279,7 +286,10 @@ def correction_factor(
         n_pos, n_neg = cells[side][:2]
         return (precision[side] * n_pos + miss[side] * n_neg) / n_pos
 
-    return precision_over_recall(False) / precision_over_recall(True)
+    human = precision_over_recall(True)
+    # A bootstrap draw can leave no human positives at all; it is then dropped as
+    # non-finite by the caller.
+    return precision_over_recall(False) / human if human else math.nan
 
 
 def human_check_sensitivity(
@@ -315,7 +325,7 @@ def human_check_sensitivity(
     rows: list[dict[str, Any]] = []
     for code, ratio in ratios.items():
         column = CODES[code]
-        cells = {}
+        cells: dict[bool, Cell] = {}
         for human_side in (True, False):
             frame = pool.filter((pl.col("source") == "human") == human_side)
             data = joined.filter(pl.col("human_side") == human_side)
@@ -327,19 +337,19 @@ def human_check_sensitivity(
                 (data.filter(pl.col(column) == 0)[code] > 0).to_numpy(),
             )
 
-        precision = {side: cell[2].mean() for side, cell in cells.items()}
-        miss = {side: cell[3].mean() for side, cell in cells.items()}
+        precision = {side: float(cell[2].mean()) for side, cell in cells.items()}
+        miss = {side: float(cell[3].mean()) for side, cell in cells.items()}
         with np.errstate(divide="ignore", invalid="ignore"):
             boots = np.array(
                 [
                     correction_factor(
                         cells,
                         {
-                            s: rng.choice(c[2], len(c[2])).mean()
+                            s: float(rng.choice(c[2], len(c[2])).mean())
                             for s, c in cells.items()
                         },
                         {
-                            s: rng.choice(c[3], len(c[3])).mean()
+                            s: float(rng.choice(c[3], len(c[3])).mean())
                             for s, c in cells.items()
                         },
                     )
@@ -710,7 +720,7 @@ def read_claude(out_dir: Path, codes: tuple[str, ...]) -> pl.DataFrame:
     ).unique("code_id")
 
 
-def alpha_nominal(a: np.ndarray, b: np.ndarray) -> float:
+def alpha_nominal(a: NDArray[np.int_], b: NDArray[np.int_]) -> float:
     """Krippendorff's alpha for two coders, nominal data, no missing values.
 
     Args:
@@ -721,8 +731,8 @@ def alpha_nominal(a: np.ndarray, b: np.ndarray) -> float:
         Alpha
     """
     values = np.concatenate([a, b])
-    observed = np.mean(a != b)
-    _, counts = np.unique(values, return_counts=True)
+    observed = float(np.mean(np.not_equal(a, b)))
+    counts: NDArray[np.intp] = np.unique(values, return_counts=True)[1]
     n = len(values)
     expected = 1 - np.sum(counts * (counts - 1)) / (n * (n - 1))
     return float(1 - observed / expected) if expected > 0 else float("nan")
@@ -762,9 +772,9 @@ def agreement(
             ("human", data.filter(pl.col("source") == "human")),
             ("model", data.filter(pl.col("source") != "human")),
         ):
-            a = (rows_group[f"{code}_a"] > 0).to_numpy()
-            b = (rows_group[f"{code}_b"] > 0).to_numpy()
-            counter = (rows_group[column] > 0).to_numpy()
+            a: NDArray[np.bool_] = (rows_group[f"{code}_a"] > 0).to_numpy()
+            b: NDArray[np.bool_] = (rows_group[f"{code}_b"] > 0).to_numpy()
+            counter: NDArray[np.bool_] = (rows_group[column] > 0).to_numpy()
             agree = a == b
             consensus, counter_c = a[agree], counter[agree]
             both = int(np.sum(a & b))
@@ -776,10 +786,12 @@ def agreement(
                     "kappa": float(cohen_kappa_score(a, b))
                     if len(set(a) | set(b)) > 1
                     else float("nan"),
-                    "alpha": alpha_nominal(a.astype(int), b.astype(int))
+                    "alpha": alpha_nominal(a.astype(np.int_), b.astype(np.int_))
                     if len(a) > 1
                     else float("nan"),
-                    "positive_agreement": 2 * both / (2 * both + int(np.sum(a != b)))
+                    "positive_agreement": 2
+                    * both
+                    / (2 * both + int(np.sum(np.not_equal(a, b))))
                     if (a | b).any()
                     else float("nan"),
                     "n_consensus": int(agree.sum()),
