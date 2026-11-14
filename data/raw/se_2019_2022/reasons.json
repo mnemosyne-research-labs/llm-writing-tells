@@ -1,0 +1,74 @@
+{
+  "english": {
+    "length": 167,
+    "score": 341,
+    "not_english": 9,
+    "edited_after_cutoff": 4,
+    "code": 5,
+    "over_max_words": 6
+  },
+  "travel": {
+    "length": 52,
+    "not_english": 4,
+    "score": 31,
+    "code": 2,
+    "edited_after_cutoff": 1,
+    "over_max_words": 1
+  },
+  "cooking": {
+    "length": 45,
+    "score": 113,
+    "edited_after_cutoff": 1,
+    "code": 1,
+    "not_english": 2,
+    "over_max_words": 6
+  },
+  "money": {
+    "score": 42,
+    "length": 17,
+    "edited_after_cutoff": 2,
+    "code": 3,
+    "not_english": 1,
+    "over_max_words": 8
+  },
+  "parenting": {
+    "score": 28,
+    "edited_after_cutoff": 2,
+    "length": 2,
+    "over_max_words": 15
+  },
+  "workplace": {
+    "score": 56,
+    "length": 10,
+    "edited_after_cutoff": 1,
+    "over_max_words": 7
+  },
+  "academia": {
+    "score": 49,
+    "code": 1,
+    "length": 20,
+    "edited_after_cutoff": 2,
+    "not_english": 1,
+    "over_max_words": 11
+  },
+  "history": {
+    "score": 31,
+    "length": 10,
+    "code": 3,
+    "edited_after_cutoff": 5,
+    "over_max_words": 8
+  },
+  "diy": {
+    "length": 28,
+    "score": 75,
+    "code": 2,
+    "over_max_words": 4
+  },
+  "bicycles": {
+    "length": 9,
+    "score": 31,
+    "edited_after_cutoff": 4,
+    "code": 1,
+    "over_max_words": 7
+  }
+}
