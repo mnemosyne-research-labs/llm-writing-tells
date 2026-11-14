@@ -1,0 +1,22 @@
+[
+  {"id": "4bbad53ab1", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "2525687b0a", "contrast": 1, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "95f601445f", "contrast": 1, "rather_than": 0, "tricolon": 1, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 1, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "555f7af359", "contrast": 0, "rather_than": 1, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "625b54ade8", "contrast": 1, "rather_than": 0, "tricolon": 1, "staccato": 0, "signpost": 0, "closer": 1, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "6ed27cb030", "contrast": 1, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 1, "hedge_closer": 0},
+  {"id": "5a1cc9789f", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 1, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "d97584e5c7", "contrast": 0, "rather_than": 0, "tricolon": 2, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 1, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "c563d692d7", "contrast": 0, "rather_than": 0, "tricolon": 1, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "5b591e28dc", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 1, "hedge_closer": 0},
+  {"id": "42c89055ab", "contrast": 1, "rather_than": 0, "tricolon": 1, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "1da2af952e", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "c59d7b2a81", "contrast": 0, "rather_than": 1, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "748dcdaa89", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "521c07e208", "contrast": 1, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "65a4f3925b", "contrast": 1, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "e548dae971", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "dbea4b293c", "contrast": 0, "rather_than": 0, "tricolon": 1, "staccato": 1, "signpost": 0, "closer": 0, "worth_noting": 0, "participial": 0, "self_answer": 2, "opener": 0, "hedge_closer": 0},
+  {"id": "0521f17fdf", "contrast": 0, "rather_than": 0, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 1, "worth_noting": 0, "participial": 1, "self_answer": 0, "opener": 0, "hedge_closer": 0},
+  {"id": "fd78468d71", "contrast": 0, "rather_than": 1, "tricolon": 0, "staccato": 0, "signpost": 0, "closer": 1, "worth_noting": 0, "participial": 0, "self_answer": 0, "opener": 0, "hedge_closer": 0}
+]

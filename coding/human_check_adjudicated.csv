@@ -1,0 +1,5 @@
+code,group,n_counter_pos,n_counter_neg,precision,recall,precision_gap,rate_ratio_factor,validated
+tricolon,human,16,28,0.750,0.696,0.250,0.928,false
+tricolon,model,17,19,1.000,1.000,0.250,0.928,false
+participial,human,18,26,0.722,0.414,0.028,0.430,false
+participial,model,16,20,0.750,1.000,0.028,0.430,false

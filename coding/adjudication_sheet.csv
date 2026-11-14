@@ -1,0 +1,63 @@
+item_id,pattern,options,final
+310bc4c230,tricolon,0 or 1,0
+7e38866fb9,participial,0 or 1 or 2,1
+d588b982ab,participial,0 or 1,0
+26a9d1c903,tricolon,0 or 1,1
+f6bd0521db,participial,0 or 1,0
+267471d0d1,participial,1 or 2 or 3,1
+81be0c9d66,participial,0 or 1,1
+bc1d7003ed,tricolon,0 or 1,1
+1726fdcbf9,participial,0 or 1,1
+520a52b566,tricolon,0 or 1,1
+9b666afa55,tricolon,0,0
+24909a3302,participial,0 or 1,1
+173794cfc8,participial,0,0
+2c103ebfad,participial,0 or 1,1
+15eef188b7,participial,0 or 1,1
+b8f3de5af9,tricolon,1 or 2,1
+63fac39267,tricolon,1 or 2 or 3,3
+fd7c3b598f,participial,0 or 2,2
+edb9e8a8c6,participial,0 or 1,0
+69a8de430d,tricolon,0 or 1,0
+f815a39133,participial,0 or 1,1
+11178b6933,tricolon,0 or 1,0
+f0eae3454b,tricolon,0,0
+81fd03a9be,participial,0 or 1,1
+b77d171291,tricolon,0 or 1 or 2,1
+b5d1e6036d,tricolon,2 or 3 or 5,3
+136e78a2fa,tricolon,1 or 2,1
+a9af307398,participial,0 or 1,0
+de42bf2ec3,participial,0 or 1,1
+5e2fba8569,participial,0 or 2,2
+4fda6fbd59,participial,0 or 1,1
+e269b8c9e1,tricolon,1 or 3,2
+8f459a6558,tricolon,2 or 3,2
+a545382150,tricolon,2 or 3,2
+f75d80a081,participial,1 or 2,1
+f6f34423db,tricolon,0 or 1,0
+fb087746ec,tricolon,0,0
+980efa9c17,tricolon,0 or 1 or 2,1
+c34c333dd5,participial,0,0
+56349e40ad,participial,0,0
+948957fd92,tricolon,0 or 1,1
+6bf5b48f5b,participial,0 or 2,2
+a3d160a635,tricolon,0,0
+c4890bd73f,participial,0 or 1,1
+5aeb935b1b,participial,0 or 1,0
+687e048566,tricolon,0 or 1,0
+67faf7bdd3,tricolon,0,0
+684df0dc85,participial,0 or 1,0
+417595f12f,participial,0 or 1,0
+6eb58d26be,tricolon,0 or 1 or 2,2
+e98d15b9e4,participial,0 or 1,1
+71393d3915,tricolon,0 or 1,0
+5cf106ce49,participial,1 or 2,2
+794c8b392b,tricolon,1 or 2,1
+b97d2aa5d2,participial,1,1
+d1ba6f7a96,participial,0,0
+7b2d32822a,tricolon,1 or 2 or 3,2
+5c6053e31e,participial,0 or 2,0
+80c7b41706,tricolon,1 or 4,1
+103c0c8868,participial,0 or 1,0
+5555818bd9,participial,1 or 2,0
+ac67b49647,participial,0 or 1,0
