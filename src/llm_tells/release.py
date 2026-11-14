@@ -42,6 +42,13 @@ GENERATED = (
     "openai.jsonl",
     "claude_api.jsonl",
 )
+# Hosted providers' terms bar using their outputs to train AI models, which an open
+# licence would allow, so these replies are released as counts only.
+HOSTED_TERMS = (
+    "hosted-model reply, released as counts only: the provider's terms bar using it to "
+    "train AI models; regenerate it with your own key"
+)
+HOSTED_GENERATED = frozenset({"openai.jsonl", "claude_api.jsonl"})
 GENERATED_TEXT_FIELDS = ("raw", "uncut")
 COPIED_AS_IS = (
     "data/generated/runs.json",
@@ -144,7 +151,10 @@ def strip_table(source: Path, target: Path) -> None:
 
 
 def release_generated(
-    source: Path, target: Path, banned: frozenset[tuple[str, ...]]
+    source: Path,
+    target: Path,
+    banned: frozenset[tuple[str, ...]],
+    withhold_all: str | None = None,
 ) -> list[str]:
     """Copy model replies, withholding the text of any that quotes human text.
 
@@ -152,16 +162,22 @@ def release_generated(
         source: Study JSON-lines file
         target: Release JSON-lines file
         banned: Human word runs
+        withhold_all: If given, every reply's text is withheld, with this reason
 
     Returns:
-        IDs of the texts whose reply was withheld
+        IDs of the texts withheld because they quote human text
     """
-    withheld = []
+    withheld: list[str] = []
     target.parent.mkdir(parents=True, exist_ok=True)
     with source.open() as lines, target.open("w") as out:
         for line in lines:
             record = json.loads(line)
-            if any(
+            if withhold_all is not None:
+                record |= {
+                    field: None for field in GENERATED_TEXT_FIELDS if field in record
+                }
+                record["withheld"] = withhold_all
+            elif any(
                 quotes_human(record.get(field), banned)
                 for field in GENERATED_TEXT_FIELDS
             ):
@@ -279,7 +295,10 @@ def build(out: Path) -> dict[str, list[str]]:
     banned = human_ngrams()
     withheld = {
         name: release_generated(
-            STUDY / "data/generated" / name, out / "data/generated" / name, banned
+            STUDY / "data/generated" / name,
+            out / "data/generated" / name,
+            banned,
+            HOSTED_TERMS if name in HOSTED_GENERATED else None,
         )
         for name in GENERATED
     }

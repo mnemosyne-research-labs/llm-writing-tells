@@ -11,7 +11,7 @@ Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not h
 | `src/llm_tells/` | All code: sampling, cleaning, generation, the tell counters, coding, analysis, the release build and the restore step |
 | `data/corpus/` | The prompt tables: one row per prompt with its IDs, register, site, date, target length and split (exploratory or confirmatory); no text |
 | `data/raw/*/*.ids.json` | Hacker News item IDs and Stack Exchange answer IDs, in sample order, and the exclusion counts from sampling |
-| `data/generated/*.jsonl` | Every model reply with its settings, stop reason, attempt and token usage: Qwen 3.8 27B, Gemma 4 E4B and Muse Glimmer 30B (`main.jsonl`, with first-attempt restorations in `d6_patch.jsonl`), gpt-6.1-sol and gpt-6-luna (`openai.jsonl`), Claude Sonnet 5.5 and Opus 5.5 (`claude_api.jsonl`), and Llama 3.1 8B base and Instruct continuations (`continuation.jsonl`) |
+| `data/generated/*.jsonl` | One record per model reply with its settings, stop reason, attempt and token usage. With the text: Qwen 3.8 27B, Gemma 4 E4B and Muse Glimmer 30B (`main.jsonl`, with first-attempt restorations in `d6_patch.jsonl`) and Llama 3.1 8B base and Instruct continuations (`continuation.jsonl`). Without the text: gpt-6.1-sol and gpt-6-luna (`openai.jsonl`), Claude Sonnet 5.5 and Opus 5.5 (`claude_api.jsonl`) |
 | `data/counts/*.parquet` | One row per text, human and model, with every tell count; no text |
 | `coding/` | The codebook, the coders' codes (Claude Haiku, GLM-4.7-Flash, Claude Fable and the human check) by opaque ID, and the agreement tables |
 | `analysis/` | The switch rule, the power simulation, the registered three-model run (`confirmatory/`), and the five- and seven-model runs (`frontier/`, `frontier_7/`) |
@@ -21,6 +21,7 @@ Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not h
 
 - **Human texts.** Hacker News comments belong to their authors and Stack Exchange posts are CC BY-SA 4.0 by theirs, so only IDs and our labels are released. `llm_tells.restore` downloads them again by ID.
 - **38 model replies** that repeat 12 or more consecutive words of the human text they answer (mostly Llama 3.1 8B base copying the answer it was asked to continue). Their counts are in `data/counts/`; their text is withheld, listed in `data/generated/withheld.json`.
+- **The text of the OpenAI and Claude replies** (3,200 replies). OpenAI's and Anthropic's terms bar using their outputs to train AI models, and an open licence on the text would let anyone do that, so only the records and counts are released. Regenerate them with your own keys (below).
 - **The exploratory Claude Code arm** (97 texts written with the lab's style instructions in context, replaced by the API arm) and the 11 pilot texts of the withdrawn Gemini arm. The Claude Code arm's counts are in `data/counts/main.parquet` (source `claude`).
 
 ## Reproduce
@@ -45,17 +46,16 @@ uv run python -I -m llm_tells.restore data/raw
 uv run python -I -m llm_tells.corpus data/raw out/corpus --previous data/corpus/prompts.parquet
 uv run python -I -m llm_tells.measure out/corpus/prompts.parquet out/main.parquet \
   --generated data/generated/main.jsonl data/generated/d6_patch.jsonl
-uv run python -I -m llm_tells.measure out/corpus/prompts.parquet out/frontier.parquet \
-  --generated data/generated/openai.jsonl data/generated/claude_api.jsonl
+uv run python -I -m llm_tells.measure out/corpus/recent_hn.parquet out/recent.parquet
 ```
 
-Checked on November 14, 2026: all 1,209 human texts restored, and every tell count in the main, frontier and recent Hacker News tables matches the released counts, except the withheld replies (skipped). The download kept a cleaned copy of each text made with the cleaning rules as they were before deviation D4; the restore cleans with the current rules. That changes the target length (`target_words`) of two prompts, and the human half of two continuation items (`cont:english:509249` and `cont:english:572253`: word, sentence and sentence-length counts). Some question titles were also edited after the download, which changes the prompt text but no count.
+Checked on November 14, 2026: all 1,209 human texts restored, and every tell count for the human texts and the released replies matches the released counts; withheld replies are skipped. The download kept a cleaned copy of each text made with the cleaning rules as they were before deviation D4; the restore cleans with the current rules. That changes the target length (`target_words`) of two prompts, and the human half of two continuation items (`cont:english:509249` and `cont:english:572253`: word, sentence and sentence-length counts). Some question titles were also edited after the download, which changes the prompt text but no count.
 
 **Generating the replies again** needs the models: the local ones through LM Studio (`llm_tells.generate`, settings in the code), the hosted ones through their APIs with key files in a folder named by `LLM_TELLS_CREDS` (`llm_tells.generate` for OpenAI, `llm_tells.claude_batch` for Anthropic). The hosted arms cost US$1.84 (OpenAI) and US$4.44 (Anthropic). Sampling was seeded where the API allowed it; Anthropic's API takes no seed, so its replies will not repeat exactly.
 
 ## Terms for the model replies
 
-The replies are model-generated and labelled with the model that wrote each one. Qwen, Gemma and Muse Glimmer are Apache 2.0. Built with Llama: the Llama 3.1 replies are subject to the Llama 3.1 Community License and Acceptable Use Policy. The OpenAI and Anthropic replies are released for research and are not offered for training AI models; their providers' terms bar using them that way.
+Every reply was written by the model named in its record (`source`, and `model` where the API reported it), not by a person, and was not edited. Mnemosyne Research Labs generated them for this study. Their factual claims were not checked and may be wrong. Qwen, Gemma and Muse Glimmer are Apache 2.0. Built with Llama: the Llama 3.1 replies are subject to the Llama 3.1 Community License and Acceptable Use Policy.
 
 ## Cite
 
