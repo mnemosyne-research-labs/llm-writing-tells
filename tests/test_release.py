@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from typing import Any
 
 import polars as pl
 import pytest
@@ -74,7 +75,9 @@ def test_leaks_finds_human_text_in_any_released_file(tmp_path: Path):
         ([{"answer_id": 9, "site": "cooking"}], [["cooking", 9]]),
     ],
 )
-def test_write_ids_keeps_file_order(tmp_path: Path, records, expected):
+def test_write_ids_keeps_file_order(
+    tmp_path: Path, records: list[dict[str, Any]], expected: list[Any]
+):
     source = tmp_path / "replies.jsonl"
     source.write_text("".join(json.dumps(r) + "\n" for r in records))
     release.write_ids(source, tmp_path / "out" / "replies.jsonl")
@@ -84,3 +87,14 @@ def test_write_ids_keeps_file_order(tmp_path: Path, records, expected):
 def test_id_helpers():
     assert hn_ids([{"id": 5}]) == [5]
     assert se_ids([{"site": "travel", "answer_id": 7}]) == [["travel", 7]]
+
+
+def test_release_generated_can_withhold_every_reply(tmp_path: Path):
+    source = tmp_path / "gen.jsonl"
+    source.write_text(json.dumps({"text_id": "a|claude_opus", "raw": "Fine."}) + "\n")
+    target = tmp_path / "out.jsonl"
+    withheld = release.release_generated(source, target, BANNED, "provider terms")
+    record = json.loads(target.read_text())
+    assert withheld == []
+    assert record["raw"] is None
+    assert record["withheld"] == "provider terms"
