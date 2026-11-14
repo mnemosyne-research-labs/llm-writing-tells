@@ -1,6 +1,6 @@
 # What gives away AI writing: data and code
 
-The data and code behind the Mnemosyne Research Labs proof sketch [We checked 23 things people say give away AI writing. Five held up.](https://mnemosyneresearch.com/findings/what-gives-away-ai-writing) (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022, and 23 claimed signs of AI writing ("tells") were counted in both. The plan was written and dated before any text was collected: [PREREGISTRATION.md](PREREGISTRATION.md), with eighteen dated deviations.
+The data and code behind the Mnemosyne Research Labs proof sketch [We checked 23 things people say give away AI writing. Five held up.](https://mnemosyneresearch.com/findings/what-gives-away-ai-writing) (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022, and 23 claimed signs of AI writing ("tells") were counted in both. The plan was written and dated before any text was collected: [PREREGISTRATION.md](PREREGISTRATION.md), with nineteen dated deviations.
 
 Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not here; see [Not included](#not-included).
 
@@ -14,8 +14,9 @@ Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not h
 | `data/generated/*.jsonl` | One record per model reply with its settings, stop reason, attempt and token usage. With the text: Qwen 3.8 27B, Gemma 4 E4B and Muse Glimmer 30B (`main.jsonl`, with first-attempt restorations in `d6_patch.jsonl`) and Llama 3.1 8B base and Instruct continuations (`continuation.jsonl`). Without the text: gpt-6.1-sol and gpt-6-luna (`openai.jsonl`), Claude Sonnet 5.5 and Opus 5.5 (`claude_api.jsonl`) |
 | `data/counts/*.parquet` | One row per text, human and model, with every tell count; no text |
 | `coding/` | The codebook, the coders' codes (Claude Haiku, GLM-4.7-Flash, Claude Fable and the human check) by opaque ID, and the agreement tables |
-| `analysis/` | The switch rule, the power simulation, the registered three-model run (`confirmatory/`), and the five- and seven-model runs (`frontier/`, `frontier_7/`) |
-| `tests/` | Tests for the release and restore steps |
+| `analysis/` | The switch rule, the power simulation, the registered three-model run (`confirmatory/`), the five- and seven-model runs (`frontier/`, `frontier_7/`), and the continuation arm without its 27 answers over 600 words (`continuation_max600/`, deviation D19) |
+| `tests/` | The test suite (synthetic data only, no network); `just test` runs it with the coverage floor |
+| `typings/` | Type stubs for the parts of scikit-learn and statsmodels the code uses |
 
 ## Not included
 
