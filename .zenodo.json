@@ -1,0 +1,29 @@
+{
+  "title": "What gives away AI writing: data and code",
+  "upload_type": "software",
+  "description": "<p>Data and code behind the Mnemosyne Research Labs proof sketch <em>We checked 23 things people say give away AI writing. Five held up.</em> (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022. Twenty-three claimed signs of AI writing were counted in both. Includes the pre-registration, the code, the prompt tables and item IDs, the model replies from open-weight models, the tell counts for every text, the coders' codes and the analysis outputs. The human texts and the OpenAI and Claude reply texts are not included. See the README.</p>",
+  "creators": [
+    {
+      "name": "Ouyang, Flavia",
+      "affiliation": "Mnemosyne Research Labs"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "AI writing",
+    "large language models",
+    "AI text detection",
+    "computational linguistics",
+    "pre-registration",
+    "reproducible research"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://mnemosyneresearch.com/findings/what-gives-away-ai-writing",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-report",
+      "scheme": "url"
+    }
+  ],
+  "language": "eng"
+}
