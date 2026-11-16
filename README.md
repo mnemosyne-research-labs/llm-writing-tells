@@ -58,6 +58,10 @@ Checked on November 14, 2026: all 1,209 human texts restored, and every tell cou
 
 Every reply was written by the model named in its record (`source`, and `model` where the API reported it), not by a person, and was not edited. Mnemosyne Research Labs generated them for this study. Their factual claims were not checked and may be wrong. Qwen, Gemma and Muse Glimmer are Apache 2.0. Built with Llama: the Llama 3.1 replies are subject to the Llama 3.1 Community License and Acceptable Use Policy.
 
+## Corrections
+
+Found an error in the data, the code or the post? [Open an issue](https://github.com/mnemosyne-research-labs/llm-writing-tells/issues) with what you ran and what you expected. Corrections that change a number or a conclusion are published as a new version of the post, with a dated note saying what changed. Report security problems privately, as the [security policy](https://github.com/mnemosyne-research-labs/.github/blob/main/SECURITY.md) explains.
+
 ## Cite
 
 ```bibtex
