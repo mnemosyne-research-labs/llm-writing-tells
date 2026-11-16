@@ -52,7 +52,7 @@ uv run python -I -m llm_tells.measure out/corpus/recent_hn.parquet out/recent.pa
 
 Checked on November 14, 2026: all 1,209 human texts restored, and every tell count for the human texts and the released replies matches the released counts; withheld replies are skipped. The download kept a cleaned copy of each text made with the cleaning rules as they were before deviation D4; the restore cleans with the current rules. That changes the target length (`target_words`) of two prompts, and the human half of two continuation items (`cont:english:509249` and `cont:english:572253`: word, sentence and sentence-length counts). Some question titles were also edited after the download, which changes the prompt text but no count.
 
-**Generating the replies again** needs the models: the local ones through LM Studio (`llm_tells.generate`, settings in the code), the hosted ones through their APIs with key files in a folder named by `LLM_TELLS_CREDS` (`llm_tells.generate` for OpenAI, `llm_tells.claude_batch` for Anthropic). The hosted arms cost US$1.84 (OpenAI) and US$4.44 (Anthropic). Sampling was seeded where the API allowed it; Anthropic's API takes no seed, so its replies will not repeat exactly.
+**Generating the replies again** needs the models: the local ones through LM Studio (`llm_tells.generate`, settings in the code), the hosted ones through their APIs with key files in a folder named by `LLM_TELLS_CREDS` (`llm_tells.generate` for OpenAI, `llm_tells.claude_batch` for Anthropic). Sampling was seeded where the API allowed it; Anthropic's API takes no seed, so its replies will not repeat exactly.
 
 ## Terms for the model replies
 
