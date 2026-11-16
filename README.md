@@ -64,6 +64,8 @@ Found an error in the data, the code or the post? [Open an issue](https://github
 
 ## Cite
 
+Cite the post for the findings, and the archived release for the data and code. [doi:10.5281/zenodo.24286168](https://doi.org/10.5281/zenodo.24286168) is this version (v1.0.0). [doi:10.5281/zenodo.24286167](https://doi.org/10.5281/zenodo.24286167) always resolves to the latest version.
+
 ```bibtex
 @techreport{ouyang2026tells,
   author      = {Ouyang, Flavia},
@@ -73,5 +75,18 @@ Found an error in the data, the code or the post? [Open an issue](https://github
   year        = {2026},
   month       = nov,
   url         = {https://mnemosyneresearch.com/findings/what-gives-away-ai-writing}
+}
+```
+
+```bibtex
+@software{ouyang2026tellsdata,
+  author    = {Ouyang, Flavia},
+  title     = {What gives away {AI} writing: data and code},
+  publisher = {Zenodo},
+  version   = {v1.0.0},
+  year      = {2026},
+  month     = nov,
+  doi       = {10.5281/zenodo.24286168},
+  url       = {https://doi.org/10.5281/zenodo.24286168}
 }
 ```
