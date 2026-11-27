@@ -1,6 +1,6 @@
 # What gives away AI writing: data and code
 
-The data and code behind the Mnemosyne Research Labs proof sketch [We checked 23 things people say give away AI writing. Five held up.](https://mnemosyneresearch.com/findings/what-gives-away-ai-writing) (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022, and 23 claimed signs of AI writing ("tells") were counted in both. The plan was written and dated before any text was collected: [PREREGISTRATION.md](PREREGISTRATION.md), with nineteen dated deviations.
+The data and code behind the Mnemosyne Research Labs proof sketch [We measured what gives away AI writing](https://mnemosyneresearch.com/findings/what-gives-away-ai-writing) (MRL:2611.0002v1, November 16, 2026). Seven models answered the same 800 Hacker News comments and Stack Exchange questions that people answered between 2019 and 2022, and 23 claimed signs of AI writing ("tells") were counted in both. The plan was written and dated before any text was collected: [PREREGISTRATION.md](PREREGISTRATION.md), with nineteen dated deviations.
 
 Code and our data are Apache 2.0 ([LICENSE](LICENSE)). The human texts are not here; see [Not included](#not-included).
 
@@ -69,7 +69,7 @@ Cite the post for the findings, and the archived release for the data and code. 
 ```bibtex
 @techreport{ouyang2026tells,
   author      = {Ouyang, Flavia},
-  title       = {We checked 23 things people say give away {AI} writing. Five held up.},
+  title       = {We measured what gives away {AI} writing},
   institution = {Mnemosyne Research Labs},
   number      = {MRL:2611.0002v1},
   year        = {2026},
